@@ -1,0 +1,17 @@
+{
+    "name": "hmabrouk/webservice",
+    "description": "this project is a part of technical test for smart tribune",
+    "type": "project",
+    "authors": [
+        {
+            "name": "hmabrouk",
+            "email": "haythem.mabrouk@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Webserver\\": "src/",
+            "Webserver\\Config\\": "config/"
+        }
+    }
+}
