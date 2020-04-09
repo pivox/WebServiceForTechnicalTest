@@ -59,12 +59,13 @@ class Curl
 
     /**
      * @param $data_json
+     * @return bool|string
      */
     public function put($data_json){
         curl_setopt($this->curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json','Content-Length: ' . strlen($data_json)));
         curl_setopt($this->curl, CURLOPT_POSTFIELDS, $data_json);
         $this->response  = curl_exec($this->curl);
-        $x = curl_error($this->curl);
         $this->close();
+        return $this->response;
     }
 }

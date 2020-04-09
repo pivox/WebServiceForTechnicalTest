@@ -6,7 +6,7 @@ namespace Webserver\Enum;
  * Class EnumChannel
  * @package Webserver\Entity
  */
-final class EnumChannel extends Enum
+final class EnumChannel
 {
     /**
      * @var string
@@ -18,25 +18,26 @@ final class EnumChannel extends Enum
     const BOT = "bot";
 
     /**
-     * EnumChannel constructor.
-     * @param $val
-     * @throws \Exception
+     * @var string
      */
-    private function __construct($val) {
-        if (!in_array($val, [self::BOT, self::FAQ])){
-            throw new \Exception("The value $val is not in the enum");
-        }
-        $this->val = $val;
-    }
+    const ERROR = "randomValue";
+
+    /**
+     * EnumChannel constructor.
+     */
+    private function __construct(){}
+
 
     /**
      * @param $value
-     * @param array $arguments
-     * @return EnumChannel
+     * @return bool
      * @throws \Exception
      */
-    public static function __callStatic($value, $arguments = [])
+    public static function isValid($value)
     {
-        return new self($value);
+        if(!in_array($value, [self::FAQ, self::BOT, self::ERROR])) {
+            throw  new \Exception("$value is not valid \n possible values ares: ".self::FAQ.", ". self::BOT.', '. self::ERROR);
+        }
+        return true;
     }
 }
