@@ -172,7 +172,7 @@ class Question implements \JsonSerializable
      */
     public function addAnswer(Answer $answer): Question
     {
-        $this->answer[] = $answer;
+        $this->answers[] = $answer;
         $this->updated = new \DateTime();
         return $this;
     }
