@@ -17,6 +17,12 @@ class Application
      * @var Question
      */
     private $question;
+
+    /**
+     * @var ArgsResolver
+     */
+    private $resolver;
+
     /**
      * @var String
      */
@@ -29,10 +35,11 @@ class Application
      */
     public function __construct(array $argv)
     {
-        if (isset($argv[1])) {
-            $this->title = str_replace("title=","", $argv[1]);
+        if (count($argv)> 0) {
+            unset($argv[0]);
+            $this->resolver = new ArgsResolver(array_values($argv));
         } else {
-            throw new \Exception("you have to pass title in parametre");
+            throw new \Exception("you have to pass some parametres");
         }
     }
 
@@ -42,15 +49,20 @@ class Application
      */
     public function init()
     {
-        $channelBot = EnumChannel::bot();
-        $status = EnumQuestionStatus::published();
+        $channelBot = EnumChannel::BOT;
+        $status = EnumQuestionStatus::PUBLISHED;
 
-        $answer = new Answer($channelBot, "test body");
+        $answer = new Answer(1, $channelBot, "test body");
         $this->question = new Question();
-        $this->question->setTitle($this->title)
+        $this->question->setId(1)
+            ->setTitle('toto')
             ->setStatus($status)
             ->setPromoted(true)
-            ->addAnswer($answer);
+            ->addAnswer($answer)
+;
+        $answer = $this->resolver->setResovableObject($answer)->resolveParams();
+        $this->question = $this->resolver->setResovableObject($this->question)->resolveParams();
+//        print_r($this->question);
     }
 
     /**

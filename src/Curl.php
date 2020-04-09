@@ -1,13 +1,31 @@
 <?php
 
-namespace WebServer;
+namespace Webserver;
 
+/**
+ * Class Curl
+ * @package WebServer
+ */
 class Curl
 {
+    /**
+     * @var false|resource
+     */
     private  $curl;
+    /**
+     * @var
+     */
     private  $url;
+    /**
+     * @var
+     */
     private  $response;
 
+    /**
+     * Curl constructor.
+     * @param null $url
+     * @throws \ErrorException
+     */
     public function __construct($url = null)
     {
         if (!extension_loaded('curl')) {
@@ -18,6 +36,9 @@ class Curl
         $this->initialize($url);
     }
 
+    /**
+     *
+     */
     public function close()
     {
         if (is_resource($this->curl)) {
@@ -25,6 +46,9 @@ class Curl
         }
     }
 
+    /**
+     * @param null $url
+     */
     private function initialize($url = null)
     {
         curl_setopt($this->curl, CURLOPT_URL, $url);
@@ -33,10 +57,15 @@ class Curl
         curl_setopt($this->curl, CURLOPT_CUSTOMREQUEST, "PUT");
     }
 
+    /**
+     * @param $data_json
+     * @return bool|string
+     */
     public function put($data_json){
         curl_setopt($this->curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json','Content-Length: ' . strlen($data_json)));
         curl_setopt($this->curl, CURLOPT_POSTFIELDS, $data_json);
         $this->response  = curl_exec($this->curl);
         $this->close();
+        return $this->response;
     }
 }

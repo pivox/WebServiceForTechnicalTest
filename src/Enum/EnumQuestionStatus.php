@@ -2,42 +2,43 @@
 
 namespace Webserver\Enum;
 
+use http\Exception;
+
 /**
  * Class EnumQuestionStatus
  * @package Webserver\Entity
  */
-final class EnumQuestionStatus extends Enum
+final class EnumQuestionStatus
 {
     /**
      * @var string
      */
     const DRAFT = "draft";
+
     /**
      * @var string
      */
     const PUBLISHED = "published";
-
+    /**
+     * @var string
+     */
+    const ERROR = "randomValue";
 
     /**
-     * EnumQuestionStatus constructor.
-     * @param $val
-     * @throws \Exception
+     * EnumChannel constructor.
      */
-    private function __construct($val) {
-        if (!in_array($val, [self::DRAFT, self::PUBLISHED])){
-            throw new \Exception("The value $val is not in the enum");
-        }
-        $this->val = $val;
-    }
+    private function __construct(){}
 
     /**
      * @param $value
-     * @param array $arguments
-     * @return EnumQuestionStatus
+     * @return bool
      * @throws \Exception
      */
-    public static function __callStatic($value, $arguments = [])
+    public static function isValid($value)
     {
-        return new self($value);
+        if(!in_array($value, [self::PUBLISHED, self::DRAFT, self::ERROR])) {
+            throw  new \Exception("$value is not valid \n possible values ares: ".self::PUBLISHED.", ". self::DRAFT.', '. self::ERROR);
+        }
+        return true;
     }
 }

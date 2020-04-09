@@ -4,11 +4,16 @@ namespace  Webserver\Entity;
 
 use Webserver\Enum\EnumQuestionStatus;
 
-class Question implements \JsonSerializable
+class Question implements \JsonSerializable, ResolvableInterface
 {
     /**
+     * @var integer
+     */
+    private $id;
+
+    /**
      * @var string
-    */
+     */
     private $title;
 
     /**
@@ -27,7 +32,7 @@ class Question implements \JsonSerializable
     private $updated;
 
     /**
-     * @var EnumQuestionStatus
+     * @var string
      */
     private $status;
 
@@ -42,6 +47,24 @@ class Question implements \JsonSerializable
     public function __construct()
     {
         $this->created = new \DateTime();
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     * @return Question
+     */
+    public function setId(int $id): Question
+    {
+        $this->id = $id;
+        return $this;
     }
 
 
@@ -126,19 +149,19 @@ class Question implements \JsonSerializable
 
 
     /**
-     * @return EnumQuestionStatus
+     * @return string
      */
-    public function getStatus(): EnumQuestionStatus
+    public function getStatus(): string
     {
         return $this->status;
     }
 
     /**
-     * @param EnumQuestionStatus $status
+     * @param string $status
      * @return Question
      * @throws \Exception
      */
-    public function setStatus(EnumQuestionStatus $status): Question
+    public function setStatus(string $status): Question
     {
         $this->status = $status;
         $this->updated = new \DateTime();
@@ -172,7 +195,7 @@ class Question implements \JsonSerializable
      */
     public function addAnswer(Answer $answer): Question
     {
-        $this->answer[] = $answer;
+        $this->answers[] = $answer;
         $this->updated = new \DateTime();
         return $this;
     }
@@ -184,12 +207,34 @@ class Question implements \JsonSerializable
     public function jsonSerialize()
     {
         return [
+            'id' => $this->id,
             'title' => $this->title,
             'promoted' => $this->promoted,
-            'created' => $this->created,
-            'updated' => $this->updated,
+//            'created' => $this->created,
+//            'updated' => $this->updated,
             'status' => $this->status,
             'answers' => $this->answers,
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function resolve(array $array): ResolvableInterface
+    {
+        foreach ($array as $key => $value) {
+            switch ($key){
+                case "title":
+                    $this->setTitle($value);
+                    break;
+                case "status":
+                    if(EnumQuestionStatus::isValid($value)) {
+                        $this->setStatus($value);
+                    }
+                    break;
+                //TODO
+            }
+        }
+        return $this;
     }
 }
