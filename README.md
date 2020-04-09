@@ -14,8 +14,9 @@ php composer.phar  dumpautoload
 - Open a terminal and execute: 
 php main.php title=title_1  status=draft channel_1=bot
 
-> the batch works with the question with the id =1 and answer with id= 1 
-> channel_1: mean that the field channem of the answer with id = 1 
+
+* the batch works with the question with the id =1 and answer with id= 1 
+* channel_1: mean that the field channem of the answer with id = 1 
 
 
 
