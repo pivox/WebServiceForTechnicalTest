@@ -24,11 +24,6 @@ class Application
     private $resolver;
 
     /**
-     * @var String
-     */
-    private $title;
-
-    /**
      * Application constructor.
      * @param array $argv
      * @throws \Exception
@@ -53,6 +48,7 @@ class Application
         $status = EnumQuestionStatus::PUBLISHED;
 
         $answer = new Answer(1, $channelBot, "test body");
+        $answer = $this->resolver->setResovableObject($answer)->resolveParams();
         $this->question = new Question();
         $this->question->setId(1)
             ->setTitle('toto')
@@ -60,9 +56,7 @@ class Application
             ->setPromoted(true)
             ->addAnswer($answer)
 ;
-        $answer = $this->resolver->setResovableObject($answer)->resolveParams();
         $this->question = $this->resolver->setResovableObject($this->question)->resolveParams();
-//        print_r($this->question);
     }
 
     /**
