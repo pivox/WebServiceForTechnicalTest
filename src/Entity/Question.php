@@ -210,8 +210,7 @@ class Question implements \JsonSerializable, ResolvableInterface
             'id' => $this->id,
             'title' => $this->title,
             'promoted' => $this->promoted,
-//            'created' => $this->created,
-//            'updated' => $this->updated,
+            'updated' => $this->updated->format("Y-m-d H:i:s"),
             'status' => $this->status,
             'answers' => $this->answers,
         ];

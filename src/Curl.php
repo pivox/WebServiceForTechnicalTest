@@ -65,7 +65,12 @@ class Curl
         curl_setopt($this->curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json','Content-Length: ' . strlen($data_json)));
         curl_setopt($this->curl, CURLOPT_POSTFIELDS, $data_json);
         $this->response  = curl_exec($this->curl);
+        $errors = curl_error($this->curl);
         $this->close();
-        return $this->response;
+        if($this->response) {
+            return $this->response;
+        }
+
+        return $errors;
     }
 }

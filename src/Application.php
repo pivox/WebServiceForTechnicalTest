@@ -44,6 +44,7 @@ class Application
      */
     public function init()
     {
+        //preparing test data and
         $channelBot = EnumChannel::BOT;
         $status = EnumQuestionStatus::PUBLISHED;
 
@@ -53,6 +54,7 @@ class Application
         $this->question->setId(1)
             ->setTitle('toto')
             ->setStatus($status)
+            ->setUpdated(new \DateTime())
             ->setPromoted(true)
             ->addAnswer($answer)
 ;
