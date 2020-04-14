@@ -10,7 +10,8 @@ Consolidate data then send it to a given url
 
 set base url under Config/config.php 
 Under terminal execute
-php-console php main.php title=title_1  status=draft channel_1=bot
+* > composer install
+* > php-console php main.php title=title_1  status=draft channel_1=bot
 
 ## Notes
 
