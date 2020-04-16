@@ -2,6 +2,8 @@
 
 namespace Webserver;
 
+use Webserver\Config\Config;
+
 /**
  * Class Curl
  * @package WebServer
@@ -23,11 +25,11 @@ class Curl
 
     /**
      * Curl constructor.
-     * @param null $url
      * @throws \ErrorException
      */
-    public function __construct($url = null)
+    public function __construct()
     {
+        $url = Config::$base_url . Config::$url;
         if (!extension_loaded('curl')) {
             throw new \ErrorException('cURL library is not loaded');
         }

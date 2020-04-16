@@ -4,14 +4,27 @@ Consolidate data then send it to a given url
 ## With docker
 
 - Open a terminal and execute: 
-> docker exec -ti php-console php main.php title=title_1  status=draft channel_1=bot
+ > docker exec -ti php-console php main.php title=title_1  status=draft channel_1=bot
+
+#### behat init 
+ >  docker exec -ti php-console bin/behat --int
+#### behat run test 
+ >  docker exec -ti php-console bin/behat 
+
 
 ## Without docker
 
 set base url under Config/config.php 
 Under terminal execute
-* > composer install
-* > php-console php main.php title=title_1  status=draft channel_1=bot
+ > composer install
+ >
+ > php-console php main.php title=title_1  status=draft channel_1=bot
+
+#### behat test 
+ > bin/behat --int
+ >
+ > bin/behat 
+
 
 ## Notes
 

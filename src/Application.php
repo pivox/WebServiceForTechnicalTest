@@ -40,9 +40,10 @@ class Application
 
 
     /**
+     * @return $this
      * @throws \Exception
      */
-    public function init()
+    public function init(): Application
     {
         //preparing test data and
         $channelBot = EnumChannel::BOT;
@@ -58,7 +59,23 @@ class Application
             ->setPromoted(true)
             ->addAnswer($answer)
 ;
+        return  $this;
+    }
+
+    /**
+     * @return $this
+     * @throws \Exception
+     */
+    public function resolveInputs(): Application
+    {
+        $listAnswers = new \ArrayObject();
+        foreach ($this->question->getAnswers() as $answer) {
+            $listAnswers->append($this->resolver->setResovableObject($answer)->resolveParams());
+        }
         $this->question = $this->resolver->setResovableObject($this->question)->resolveParams();
+        $this->question->setAnswers($listAnswers);
+
+        return $this;
     }
 
     /**
@@ -68,4 +85,24 @@ class Application
     {
         return json_encode($this->question);
     }
+
+    /**
+     * @return Question
+     */
+    public function getQuestion(): Question
+    {
+        return $this->question;
+    }
+
+    /**
+     * @param Question $question
+     * @return Application
+     */
+    public function setQuestion(Question $question): Application
+    {
+        $this->question = $question;
+        return $this;
+    }
+
+
 }

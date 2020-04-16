@@ -93,24 +93,6 @@ class Answer implements \JsonSerializable, ResolvableInterface
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getEnumChannel(): string
-    {
-        return $this->channel;
-    }
-
-    /**
-     * @param string $EnumChannel
-     * @return Answer
-     */
-    public function setEnumChannel(string $EnumChannel): Answer
-    {
-        $this->channel = $EnumChannel;
-        return $this;
-    }
-
 
     /**
      * @inheritDoc

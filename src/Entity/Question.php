@@ -47,6 +47,7 @@ class Question implements \JsonSerializable, ResolvableInterface
     public function __construct()
     {
         $this->created = new \DateTime();
+        $this->answers = new \ArrayObject();
     }
 
     /**
@@ -195,7 +196,7 @@ class Question implements \JsonSerializable, ResolvableInterface
      */
     public function addAnswer(Answer $answer): Question
     {
-        $this->answers[] = $answer;
+        $this->answers->append($answer);
         $this->updated = new \DateTime();
         return $this;
     }
