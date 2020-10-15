@@ -16,3 +16,4 @@ Feature: send-json-as-web-service
     Then I the response has field "title" with value "behatValue"
     Then I the response has field "status" with value "draft"
 
+

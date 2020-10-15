@@ -8,7 +8,7 @@
             "email": "haythem.mabrouk@gmail.com"
         }
     ],
-    "require-dev": {
+    "require-dev": 
         "behat/behat": "3.7.*",
         "phpunit/phpunit": "^9",
         "symfony/console": "4.4.*",

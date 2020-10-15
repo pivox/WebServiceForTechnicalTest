@@ -35,6 +35,7 @@ To Get all the questions from the forein server:
 
 - To Update the question with id = 1 
  >  php main.php UPDATE  --id=1
+
 #### behat test 
  > bin/behat --int
  >

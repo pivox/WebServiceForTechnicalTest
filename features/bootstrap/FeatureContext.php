@@ -17,7 +17,7 @@ class FeatureContext  implements \Behat\Behat\Context\SnippetAcceptingContext
 
     /** @var array */
     private $params = ['main.php'];
-
+  
     /** @var string */
     private $response;
 
@@ -29,10 +29,12 @@ class FeatureContext  implements \Behat\Behat\Context\SnippetAcceptingContext
         if($arg1 != 1) {
             throw new PendingException( "Argument id must equal to one");
         }
+
         $answer = new \Webserver\Entity\Answer(1, 1, \Webserver\Enum\EnumChannel::BOT, "body toto");
 
         $this->question = new \Webserver\Entity\Question();
         $this->question = $this->question->setId($arg1)
+
             ->setPromoted(false)
             ->setTitle("title")
             ->addAnswer($answer)
@@ -62,6 +64,7 @@ class FeatureContext  implements \Behat\Behat\Context\SnippetAcceptingContext
      */
     public function questionTitleSToUpdateWithValue($arg1)
     {
+
         \PHPUnit\Framework\Assert::assertEquals('behatValue', $arg1);
         $this->question->setTitle($arg1);
     }

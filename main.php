@@ -28,4 +28,3 @@ if (strtoupper($options[0]) == 'GET') {
 
 }
 $application->run(new \Symfony\Component\Console\Input\ArgvInput($options));
-die(print(__LINE__."\n"));

@@ -3,6 +3,7 @@
 namespace Webserver;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 use Webserver\Config\Config;
 
 /**
@@ -19,7 +20,7 @@ class Curl
      * @var
      */
     private  $url;
-
+  
     /**
      * @var
      */

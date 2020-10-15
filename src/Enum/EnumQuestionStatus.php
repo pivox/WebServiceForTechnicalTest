@@ -41,7 +41,7 @@ final class EnumQuestionStatus
         }
         return true;
     }
-
+  
     public static function getList(): array
     {
         return [
