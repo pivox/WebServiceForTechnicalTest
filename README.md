@@ -3,8 +3,14 @@ Consolidate data then send it to a given url
 
 ## With docker
 
-- Open a terminal and execute: 
- > docker exec -ti php-console php main.php title=title_1  status=draft channel_1=bot
+- To Get all the questions from the forein server: 
+ >  make console-get-all
+
+- To Get the question with id = 1 
+ >  make console-get-id-1 
+
+- To Update the question with id = 1 
+ >  make console-update-id-1 
 
 #### behat init 
  >  docker exec -ti php-console bin/behat --int
@@ -14,11 +20,21 @@ Consolidate data then send it to a given url
 
 ## Without docker
 
-set base url under Config/config.php 
+set base url under Config/config.php
+  
 Under terminal execute
  > composer install
- >
- > php-console php main.php title=title_1  status=draft channel_1=bot
+
+
+
+To Get all the questions from the forein server: 
+ > php main.php GET
+
+- To Get the question with id = 1 
+ > php main.php GET --id-question=1 
+
+- To Update the question with id = 1 
+ >  php main.php UPDATE  --id=1
 
 #### behat test 
  > bin/behat --int

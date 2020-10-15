@@ -3,6 +3,23 @@ namespace Webserver\Config;
 
 final class Config
 {
-    public static $base_url = "nginx";
-    public static $url = "/api/question/put";
+    private static $base_url = "nginx";
+    private static $url = "/api/question/";
+    private static $url_id = "{id}";
+
+    public static function getQuestionsUrl()
+    {
+        return self::$base_url.self::$url;
+    }
+
+    public static function editQuestionUrl(int $id)
+    {
+
+        return self::$base_url.str_replace('{id}', $id, self::$url_id);
+    }
+
+    public static function getQuestionUrl(int $id)
+    {
+        return self::$base_url.self::$url.str_replace('{id}', $id, self::$url_id);
+    }
 }

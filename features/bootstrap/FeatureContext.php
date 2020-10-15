@@ -4,20 +4,22 @@ use Behat\Behat\Context\ClosuredContextInterface,
     Behat\Behat\Context\TranslatedContextInterface,
     Behat\Behat\Context\BehatContext,
     Behat\Behat\Exception\PendingException;
-use Behat\Gherkin\Node\PyStringNode,
-    Behat\Gherkin\Node\TableNode;
+use Webserver\Request\QuestionRequest;
 
 
 /**
  * Features context.
  */
-class FeatureContext extends BehatContext
+class FeatureContext  implements \Behat\Behat\Context\SnippetAcceptingContext
 {
     /**  @var \Webserver\Entity\Question */
     private $question;
 
     /** @var array */
     private $params = ['main.php'];
+  
+    /** @var string */
+    private $response;
 
     /**
      * @Given /^I a am a Question with id equals "([^"]*)"$/
@@ -27,10 +29,12 @@ class FeatureContext extends BehatContext
         if($arg1 != 1) {
             throw new PendingException( "Argument id must equal to one");
         }
-        $answer = new \Webserver\Entity\Answer(1, \Webserver\Enum\EnumChannel::BOT, "body toto");
 
-        $question = new \Webserver\Entity\Question();
-        $this->question = $question->setId($arg1)
+        $answer = new \Webserver\Entity\Answer(1, 1, \Webserver\Enum\EnumChannel::BOT, "body toto");
+
+        $this->question = new \Webserver\Entity\Question();
+        $this->question = $this->question->setId($arg1)
+
             ->setPromoted(false)
             ->setTitle("title")
             ->addAnswer($answer)
@@ -60,8 +64,9 @@ class FeatureContext extends BehatContext
      */
     public function questionTitleSToUpdateWithValue($arg1)
     {
-        \PHPUnit\Framework\Assert::assertEquals('title=behatValue', $arg1);
-        $this->params[] = 'title=behatValue';
+
+        \PHPUnit\Framework\Assert::assertEquals('behatValue', $arg1);
+        $this->question->setTitle($arg1);
     }
 
     /**
@@ -69,8 +74,8 @@ class FeatureContext extends BehatContext
      */
     public function questionStatusToUpdateWithValue($arg1)
     {
-        \PHPUnit\Framework\Assert::assertEquals("status=draft", $arg1);
-        $this->params[] = 'status=draft';
+        \PHPUnit\Framework\Assert::assertEquals("draft", $arg1);
+        $this->question->setStatus($arg1);
     }
 
     /**
@@ -78,19 +83,28 @@ class FeatureContext extends BehatContext
      */
     public function iSendTheData()
     {
-        $application = new \Webserver\Application($this->params);
-        $curl = new \Webserver\Curl();
-        $application
-            ->setQuestion($this->question)
-            ->resolveInputs();
-        $this->response = $curl->put($application->getJsonForSend());
+        $questionRequest = new QuestionRequest();
+        $this->response = $questionRequest->editQuestion((int) $this->question->getId(), json_encode($this->question));
     }
 
     /**
-     * @Then /^I get response as an empty array$/
+     * @Then I the response has field :arg1 with value :arg2
      */
-    public function iGetResponseAsAnEmptyArray()
+    public function iTheResponseHasFieldWithValue2($arg1, $arg2)
     {
-        \PHPUnit\Framework\Assert::assertEmpty(json_decode($this->response, true));
+        $responseArray = $this->response;
+        \PHPUnit\Framework\assertArrayHasKey($arg1, $responseArray, "$arg1 does not exist in response");
+        if (array_key_exists($arg1, $responseArray)) {
+            \PHPUnit\Framework\assertEquals($responseArray[$arg1], $arg2);
+        }
+    }
+
+    /**
+     * @Given request question with id :arg1
+     */
+    public function requestQuestionWithId($arg1)
+    {
+        $questionRequest = new QuestionRequest();
+        $this->response = $questionRequest->getById((int) $arg1);
     }
 }

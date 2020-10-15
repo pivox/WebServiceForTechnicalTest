@@ -4,7 +4,7 @@ namespace  Webserver\Entity;
 
 use Webserver\Enum\EnumQuestionStatus;
 
-class Question implements \JsonSerializable, ResolvableInterface
+class Question implements \JsonSerializable
 {
     /**
      * @var integer
@@ -215,26 +215,5 @@ class Question implements \JsonSerializable, ResolvableInterface
             'status' => $this->status,
             'answers' => $this->answers,
         ];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function resolve(array $array): ResolvableInterface
-    {
-        foreach ($array as $key => $value) {
-            switch ($key){
-                case "title":
-                    $this->setTitle($value);
-                    break;
-                case "status":
-                    if(EnumQuestionStatus::isValid($value)) {
-                        $this->setStatus($value);
-                    }
-                    break;
-                //TODO
-            }
-        }
-        return $this;
     }
 }

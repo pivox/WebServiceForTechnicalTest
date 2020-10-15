@@ -8,7 +8,7 @@ use Webserver\Enum\EnumChannel;
  * Class Answer
  * @package Webserver\Entity
  */
-class Answer implements \JsonSerializable, ResolvableInterface
+class Answer implements \JsonSerializable
 {
 
     /**
@@ -27,14 +27,20 @@ class Answer implements \JsonSerializable, ResolvableInterface
     private $body;
 
     /**
+     * @var integer
+    */
+    private $questionId;
+
+    /**
      * Answer constructor.
      * @param integer $id
      * @param string $EnumChannel
      * @param string $body
      */
-    public function __construct(int $id, string $EnumChannel = null, string $body = null)
+    public function __construct(int $id, int $questionId,string $EnumChannel = null, string $body = null)
     {
         $this->id = $id;
+        $this->questionId = $questionId;
         $this->channel = $EnumChannel;
         $this->body = $body;
     }
@@ -103,25 +109,7 @@ class Answer implements \JsonSerializable, ResolvableInterface
             "channel" => $this->channel,
             "body" => $this->body,
             "id" => $this->id,
+            "question" => $this->questionId,
         ];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function resolve(array $array): ResolvableInterface
-    {
-        $pattern = '/channel(_){0,1}([\d])*/m';
-
-        foreach ($array as $key => $value) {
-            switch ($key){
-                case "channel_".$this->id:
-                    if(EnumChannel::isValid($value)) {
-                        $this->setEnumChannel($value);
-                    }
-                //TODO
-            }
-        }
-        return $this;
     }
 }

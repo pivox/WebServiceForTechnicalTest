@@ -8,9 +8,11 @@
             "email": "haythem.mabrouk@gmail.com"
         }
     ],
-    "require-dev": {
-        "behat/behat": "~2.5",
-        "phpunit/phpunit": "^9"
+    "require-dev": 
+        "behat/behat": "3.7.*",
+        "phpunit/phpunit": "^9",
+        "symfony/console": "4.4.*",
+        "symfony/var-dumper": "4.4.*"
     },
     "config": {
         "bin-dir": "bin/"
